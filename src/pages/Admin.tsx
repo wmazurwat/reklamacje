@@ -27,6 +27,9 @@ const Admin = ()  => {
         <h1>{u.email}</h1>
 
         </div>)}
+        <div>
+          
+        </div>
     </div>
   );
 }
