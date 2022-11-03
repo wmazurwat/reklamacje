@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { collection, doc, FieldValue, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import {
   Avatar,
   Checkbox,
-  FormControlLabel,
   Paper,
   Table,
   TableBody,
@@ -14,8 +13,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Image } from "@mui/icons-material";
-import { getValue } from "@testing-library/user-event/dist/utils";
+
 
 const Admin = () => {
   const [users, setUsers] = useState<any[]>([]);
