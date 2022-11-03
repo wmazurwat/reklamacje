@@ -36,25 +36,20 @@ const Home = ()  => {
   return (
     <div className="App">
        <h1>Home</h1>
+       <h2>Wpisz poniżej adres URL linku platformy youtube.com który chcesz przekształcić na plik audio z rozszeżeniem .mp3, a następnie kliknij przycisk POBIERZ</h2>
        <form onSubmit={formik.handleSubmit}>
         <TextField
-          fullWidth
+          //fullWidth
           id="email"
           name="email"
-          label="Email"
-          value={formik.values.email}
+          label="Adres URL youtube.com"
+          //value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
         <Button color="primary" variant="contained" type="submit">
-          Submit
-        </Button>
-        <Button color="primary" variant="contained" type="submit">
-          Submit
-        </Button>
-        <Button color="primary" variant="contained" type="submit">
-          Submit
+          Pobierz
         </Button>
       </form>
     </div>

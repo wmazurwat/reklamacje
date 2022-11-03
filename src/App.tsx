@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import AddUser from './pages/AddUser';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -20,7 +19,6 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="admin" element={<Admin />} />
-        <Route path="addUser" element={<AddUser />} />
       </Routes>
     </div>
   );

@@ -102,8 +102,11 @@ const Login = () => {
   return (
     <div className="App">
       <h1>Login</h1>
+      <h3>Aplikacja HUB służy do konwersji sygnału audio z serwera youtube.com do pliku mp3.
+        Aby skorzystać z usługi zaloguj się najpierw korzystając z konta Google klikając poniżej przycisk Login
+      </h3>
       <form onSubmit={formik.handleSubmit}>
-        <Button color="primary" variant="contained" fullWidth onClick={onLogin}>
+        <Button color="primary" variant="contained"  onClick={onLogin}>
           Login
         </Button>
       </form>
