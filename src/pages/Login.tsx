@@ -7,9 +7,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Button} from "@mui/material";
 import { auth, db } from "../firebase";
-import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 
 interface MyFormValues {
   firstName: string;

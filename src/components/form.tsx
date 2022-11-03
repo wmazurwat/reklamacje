@@ -1,11 +1,8 @@
 import * as React from 'react';
 import {
   Formik,
-  FormikHelpers,
-  FormikProps,
   Form,
   Field,
-  FieldProps,
 } from 'formik';
 
 interface MyFormValues {
