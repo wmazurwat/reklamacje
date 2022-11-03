@@ -64,8 +64,9 @@ const Admin = () => {
           </Table>
         </TableContainer>
       </div>
-    </div> //popwawa błędu i wielkości zdjęc, mapowianie boolenowych wartości na checkboxa??????"""?>>??????"
+    </div> 
   );
 };
 
 export default Admin;
+//popwawa błędu i wielkości zdjęc, mapowianie boolenowych wartości na checkboxa??????"""?>>??????"
