@@ -14,6 +14,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Image } from "@mui/icons-material";
 
 const Admin = () => {
   const [users, setUsers] = useState<any[]>([]);
@@ -35,7 +36,7 @@ const Admin = () => {
       <h1>Home</h1>
       <div>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650,width: '90%' }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Photo</TableCell>
@@ -49,15 +50,14 @@ const Admin = () => {
               {users.map((u) => (
                 <TableRow
                   key={u.displayName}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  //sx={{ "&:last-child td, &:last-child th": { border: 0 } }}????????
                 >
-                  <TableCell component="th" scope="row">
-                    {u.photoURL}
-                  </TableCell>
+                  
+                  <TableCell> <img src={u.photoURL} /></TableCell>  
                   <TableCell align="right">{u.displayName}</TableCell>
                   <TableCell align="right">{u.id}</TableCell>
                   <TableCell align="right">{u.email}</TableCell>
-                  <TableCell align="right">{u.admin}</TableCell>
+                  <TableCell align="right">{u.admin}</TableCell>  
                   <FormControlLabel control={<Checkbox  />} label="Admin" />
                 </TableRow>
               ))}
@@ -65,7 +65,7 @@ const Admin = () => {
           </Table>
         </TableContainer>
       </div>
-    </div>
+    </div> //popwawa błędu i wielkości zdjęc, mapowianie boolenowych wartości na checkboxa??????"""?>>??????"
   );
 };
 
