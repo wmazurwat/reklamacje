@@ -5,6 +5,7 @@ import './App.css';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="admin" element={<Admin />} />
+        
       </Routes>
+      <Footer />
     </div>
   );
 }

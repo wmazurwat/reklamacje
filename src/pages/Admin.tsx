@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, FieldValue, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import {
   Avatar,
@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Image } from "@mui/icons-material";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 const Admin = () => {
   const [users, setUsers] = useState<any[]>([]);
@@ -26,12 +27,13 @@ const Admin = () => {
       temp.push(doc.data());
     });
     setUsers(temp);
-    console.log(temp);
   };
   useEffect(() => {
     getUsers();
   }, []);
+ 
   return (
+    
     <div className="App">
       <h1>Home</h1>
       <div>
@@ -56,8 +58,7 @@ const Admin = () => {
                   <TableCell align="center">{u.displayName}</TableCell>
                   <TableCell align="center">{u.id}</TableCell>
                   <TableCell align="center">{u.email}</TableCell>
-                  <TableCell align="center">{u.admin}</TableCell>  
-                  <FormControlLabel control={<Checkbox  />} label="Admin" />
+                  <TableCell align="center">{<Checkbox checked={u.admin} onChange={u.admin} />}</TableCell> 
                 </TableRow>
               ))}
             </TableBody>
@@ -69,4 +70,4 @@ const Admin = () => {
 };
 
 export default Admin;
-//popwawa błędu i wielkości zdjęc, mapowianie boolenowych wartości na checkboxa??????"""?>>??????"
+//FormControlLabel in Checkbox
