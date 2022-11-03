@@ -9,7 +9,7 @@ import Login from './pages/Login';
 function App() {
   return (
     <div className="App">
-       <h1>Welcome to React Router!</h1>
+       <h1>HUB 5</h1>
        <nav>
         <Link to="/login">login</Link>
         <Link to="/">Home</Link>

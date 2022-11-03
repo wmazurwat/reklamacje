@@ -40,10 +40,10 @@ const Admin = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Photo</TableCell>
-                <TableCell align="right">Nazwa</TableCell>
-                <TableCell align="right">ID</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Admin</TableCell>
+                <TableCell align="center">Nazwa</TableCell>
+                <TableCell align="center">ID</TableCell>
+                <TableCell align="center">Email</TableCell>
+                <TableCell align="center">Admin</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,12 +52,11 @@ const Admin = () => {
                   key={u.displayName}
                   //sx={{ "&:last-child td, &:last-child th": { border: 0 } }}????????
                 >
-                  
-                  <TableCell> <img src={u.photoURL} /></TableCell>  
-                  <TableCell align="right">{u.displayName}</TableCell>
-                  <TableCell align="right">{u.id}</TableCell>
-                  <TableCell align="right">{u.email}</TableCell>
-                  <TableCell align="right">{u.admin}</TableCell>  
+                  <TableCell> <Avatar  src={u.photoURL} /></TableCell> 
+                  <TableCell align="center">{u.displayName}</TableCell>
+                  <TableCell align="center">{u.id}</TableCell>
+                  <TableCell align="center">{u.email}</TableCell>
+                  <TableCell align="center">{u.admin}</TableCell>  
                   <FormControlLabel control={<Checkbox  />} label="Admin" />
                 </TableRow>
               ))}
