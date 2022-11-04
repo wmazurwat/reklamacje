@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import {
   Avatar,
   Checkbox,
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -12,11 +13,12 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { spacing } from '@mui/system';
 
 
 const Admin = () => {
   const [users, setUsers] = useState<any[]>([]);
+  const [inProgress, setInProgress] = useState(false);
+
   const getUsers = async () => {
     const querySnapshot = await getDocs(collection(db, "users"));
     const temp: any = [];
@@ -29,14 +31,27 @@ const Admin = () => {
   useEffect(() => {
     getUsers();
   }, []);
+
+  const onSetAdmin = async (id: string, isAdmin: boolean) => {
+    if(!inProgress) {
+      setInProgress(true)
+      const washingtonRef = doc(db, "users", id);
+      await updateDoc(washingtonRef, {
+        admin: !isAdmin,
+      });
+      await getUsers();
+      setInProgress(false)
+    }
+  }
  
   return (
     
     <div className="App">
       <h1>Home</h1>
       <div>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650,width: '80%', m:20,p:20}} aria-label="simple table">
+       
+        <TableContainer component={Paper} sx={{ minWidth: 450,width: '80%', m: 'auto'}}>
+          <Table  aria-label="simple table" >
             <TableHead>
               <TableRow>
                 <TableCell>Photo</TableCell>
@@ -56,7 +71,7 @@ const Admin = () => {
                   <TableCell align="center">{u.displayName}</TableCell>
                   <TableCell align="center">{u.id}</TableCell>
                   <TableCell align="center">{u.email}</TableCell>
-                  <TableCell align="center">{<Checkbox checked={u.admin} onChange={u.admin} />}</TableCell> 
+                  <TableCell align="center">{inProgress ? <CircularProgress size={25} /> : <Checkbox checked={u.admin} onChange={() => onSetAdmin(u.id, u.admin)} />}</TableCell> 
                 </TableRow>
               ))}
             </TableBody>
