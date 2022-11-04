@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { spacing } from '@mui/system';
 
 
 const Admin = () => {
@@ -35,7 +36,7 @@ const Admin = () => {
       <h1>Home</h1>
       <div>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650,width: '90%' }} aria-label="simple table">
+          <Table sx={{ minWidth: 650,width: '80%', m:20,p:20}} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Photo</TableCell>
