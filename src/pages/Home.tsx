@@ -1,35 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useFormik,
 } from 'formik';
 import * as yup from 'yup';
 
 import { Button, TextField } from '@mui/material';
+import { getVideogInfo } from '../api/api';
 
 interface MyFormValues {
   firstName: string;
 }
 
 const validationSchema = yup.object({
-  email: yup
+  url: yup
     .string()
-    .email('Enter a valid email')
     .required('Email is required'),
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
 });
 
 const Home = ()  => {
+  const [info, setInfo] = useState({});
   const formik = useFormik({
     initialValues: {
-      email: 'foobar@example.com',
-      password: 'foobar',
+      url: 'https://www.youtube.com/watch?v=dzxRcdmZubc',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      console.log(values.url)
+      const info = await getVideogInfo(values.url)
+      console.log(info)
+      setInfo(info)
     },
   });
 
@@ -40,13 +39,11 @@ const Home = ()  => {
        <form onSubmit={formik.handleSubmit}>
         <TextField
           //fullWidth
-          id="email"
-          name="email"
+          id="url"
+          name="url"
           label="Adres URL youtube.com"
-          //value={formik.values.email}
+          value={formik.values.url}
           onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
         />
         <Button color="primary" variant="contained" type="submit">
           Pobierz
