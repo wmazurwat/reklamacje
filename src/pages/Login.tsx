@@ -100,7 +100,7 @@ const Login = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <h1>Login</h1>
       <h3>Aplikacja HUB służy do konwersji sygnału audio z serwera youtube.com do pliku mp3.
         Aby skorzystać z usługi zaloguj się najpierw korzystając z konta Google klikając poniżej przycisk Login

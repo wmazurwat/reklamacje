@@ -46,10 +46,9 @@ const Admin = () => {
  
   return (
     
-    <div className="App">
-      <h1>Home</h1>
+    <div  className='container'>
+      <h1>Admin</h1>
       <div>
-       
         <TableContainer component={Paper} sx={{ minWidth: 450,width: '80%', m: 'auto'}}>
           <Table  aria-label="simple table" >
             <TableHead>

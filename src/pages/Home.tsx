@@ -34,7 +34,7 @@ const Home = ()  => {
   });
 
   return (
-    <div className="App">
+    <div className='container'>
        <h1>Home</h1>
        <h2>Wpisz poniżej adres URL linku platformy youtube.com który chcesz przekształcić na plik audio z rozszeżeniem .mp3, a następnie kliknij przycisk POBIERZ</h2>
        <form onSubmit={formik.handleSubmit}>
