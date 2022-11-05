@@ -14,7 +14,6 @@ import {
   TableRow,
 } from "@mui/material";
 
-
 const Admin = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [inProgress, setInProgress] = useState(false);
@@ -33,24 +32,26 @@ const Admin = () => {
   }, []);
 
   const onSetAdmin = async (id: string, isAdmin: boolean) => {
-    if(!inProgress) {
-      setInProgress(true)
+    if (!inProgress) {
+      setInProgress(true);
       const washingtonRef = doc(db, "users", id);
       await updateDoc(washingtonRef, {
         admin: !isAdmin,
       });
       await getUsers();
-      setInProgress(false)
+      setInProgress(false);
     }
-  }
- 
+  };
+
   return (
-    
-    <div  className='container'>
+    <div className="container">
       <h1>Admin</h1>
       <div>
-        <TableContainer component={Paper} sx={{ minWidth: 450,width: '80%', m: 'auto'}}>
-          <Table  aria-label="simple table" >
+        <TableContainer
+          component={Paper}
+          sx={{ minWidth: 450, width: "80%", m: "auto" }}
+        >
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Photo</TableCell>
@@ -62,24 +63,32 @@ const Admin = () => {
             </TableHead>
             <TableBody>
               {users.map((u) => (
-                <TableRow
-                  key={u.displayName}
-                  //sx={{ "&:last-child td, &:last-child th": { border: 0 } }}????????
-                >
-                  <TableCell> <Avatar  src={u.photoURL} /></TableCell> 
+                <TableRow key={u.displayName}>
+                  <TableCell>
+                    {" "}
+                    <Avatar src={u.photoURL} />
+                  </TableCell>
                   <TableCell align="center">{u.displayName}</TableCell>
                   <TableCell align="center">{u.id}</TableCell>
                   <TableCell align="center">{u.email}</TableCell>
-                  <TableCell align="center">{inProgress ? <CircularProgress size={25} /> : <Checkbox checked={u.admin} onChange={() => onSetAdmin(u.id, u.admin)} />}</TableCell> 
+                  <TableCell align="center">
+                    {inProgress ? (
+                      <CircularProgress size={25} />
+                    ) : (
+                      <Checkbox
+                        checked={u.admin}
+                        onChange={() => onSetAdmin(u.id, u.admin)}
+                      />
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-    </div> 
+    </div>
   );
 };
 
 export default Admin;
-//FormControlLabel in Checkbox
