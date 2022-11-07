@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import { getVideogInfo } from "../api/api";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import { getAuth, signOut } from "firebase/auth";
 interface MyFormValues {
   firstName: string;
 }
@@ -28,6 +29,15 @@ const Home = () => {
     },
   });
 
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+
   return (
     <div className="container">
       <h1>Home</h1>
@@ -36,22 +46,36 @@ const Home = () => {
         przekształcić na plik audio z rozszeżeniem .mp3, a następnie kliknij
         przycisk POBIERZ
       </h2>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          //fullWidth
-          id="url"
-          name="url"
-          label="Adres URL youtube.com"
-          value={formik.values.url}
-          onChange={formik.handleChange}
+      <div>
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            id="url"
+            name="url"
+            label="Adres URL youtube.com"
+            value={formik.values.url}
+            onChange={formik.handleChange}
+          />
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            type="submit"
+          >
+            Pobierz
+          </Button>
+        </form>
+      </div>
+
+      <IconButton aria-label="delete" size="large">
+        <LogoutIcon
+          fontSize="large"
+          onClick={() => {
+            signOut(auth);
+            alert("Wylogowano");
+            console.log("Wylogowano");
+          }}
         />
-        <Button color="primary" variant="contained" type="submit">
-          Pobierz
-        </Button>
-        <Button color="primary" variant="contained" type="submit">
-          Wyloguj się
-        </Button>
-      </form>
+      </IconButton>
     </div>
   );
 };
