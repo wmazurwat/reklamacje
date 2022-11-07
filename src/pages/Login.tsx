@@ -82,6 +82,7 @@ const Login = () => {
         // The signed-in user info.
         const user = result.user;
         console.log(user);
+        alert('Zalogowano');
         // ...
       })
       .catch((error) => {
@@ -108,6 +109,7 @@ const Login = () => {
       <form onSubmit={formik.handleSubmit}>
         <Button color="primary" variant="contained"  onClick={onLogin}>
           Login
+          
         </Button>
       </form>
     </div>
