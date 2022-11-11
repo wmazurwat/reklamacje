@@ -1,31 +1,32 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
 import { Button, IconButton, TextField } from "@mui/material";
-import { getVideogInfo } from "../api/api";
+import { getMp3, getVideoInfo } from "../api/api";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { getAuth, signOut } from "firebase/auth";
-interface MyFormValues {
-  firstName: string;
-}
 
 const validationSchema = yup.object({
-  url: yup.string().required("Email is required"),
+  url: yup.string().required("URL is required"),
 });
 
 const Home = () => {
   const [info, setInfo] = useState({});
+  const audio = useRef<HTMLAudioElement>(null);
+  const [mp3, setMp3] = useState<Blob>();
+
   const formik = useFormik({
     initialValues: {
-      url: "https://www.youtube.com/watch?v=dzxRcdmZubc",
+      url: "https://www.youtube.com/watch?v=6hkeM7-WgD8",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values.url);
-      const info = await getVideogInfo(values.url);
-      console.log(info);
-      setInfo(info);
+      const mp3 = await getMp3(values.url);
+      if (audio.current != undefined) {
+        // @ts-ignore
+        audio.current.src = URL.createObjectURL(mp3);
+        audio.current.load();
+      }
     },
   });
 
@@ -65,16 +66,19 @@ const Home = () => {
           </Button>
         </form>
       </div>
-
-      <IconButton aria-label="delete" size="large">
-        <LogoutIcon
-          fontSize="large"
-          onClick={() => {
-            signOut(auth);
-            alert("Wylogowano");
-            console.log("Wylogowano");
-          }}
-        />
+      <audio controls ref={audio}>
+        Your browser does not support the audio element.
+      </audio>
+      <IconButton
+        aria-label="delete"
+        size="large"
+        onClick={() => {
+          signOut(auth);
+          alert("Wylogowano");
+          console.log("Wylogowano");
+        }}
+      >
+        <LogoutIcon fontSize="large" />
       </IconButton>
     </div>
   );
