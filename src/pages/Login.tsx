@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { Button} from "@mui/material";
+import { Button } from "@mui/material";
 import { auth, db } from "../firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 
@@ -44,7 +44,7 @@ const Login = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         // navigate("/")
-        const { email, displayName, photoURL, uid} = user;
+        const { email, displayName, photoURL, uid } = user;
         try {
           const docRef = doc(db, "users", uid);
           const docSnap = await getDoc(docRef);
@@ -82,7 +82,7 @@ const Login = () => {
         // The signed-in user info.
         const user = result.user;
         console.log(user);
-        alert('Zalogowano');
+        alert("Zalogowano");
         // ...
       })
       .catch((error) => {
@@ -101,15 +101,16 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Login</h1>
-      <h3>Aplikacja HUB służy do konwersji sygnału audio z serwera youtube.com do pliku mp3.
-        Aby skorzystać z usługi zaloguj się najpierw korzystając z konta Google klikając poniżej przycisk Zaloguj z użyciem konta Google
+      <h3>
+        Aplikacja HUB służy do konwersji sygnału audio z serwera youtube.com do
+        pliku mp3. Aby skorzystać z usługi zaloguj się najpierw korzystając z
+        konta Google klikając poniżej przycisk Zaloguj z użyciem konta Google
       </h3>
       <form onSubmit={formik.handleSubmit}>
-        <Button color="primary" variant="contained"  onClick={onLogin}>
+        <Button color="primary" variant="contained" onClick={onLogin}>
           Zaloguj z użyciem konta Google
-          
         </Button>
       </form>
     </div>
