@@ -34,8 +34,8 @@ const Admin = () => {
   const onSetAdmin = async (id: string, isAdmin: boolean) => {
     if (!inProgress) {
       setInProgress(true);
-      const washingtonRef = doc(db, "users", id);
-      await updateDoc(washingtonRef, {
+      const userRef = doc(db, "users", id);
+      await updateDoc(userRef, {
         admin: !isAdmin,
       });
       await getUsers();

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import Box from "@mui/material/Box";
 
 import "./App.css";
 import Admin from "./pages/Admin";

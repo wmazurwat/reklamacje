@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { getMp3 } from "../api/api";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const validationSchema = yup.object({
   url: yup.string().required("URL is required"),
@@ -32,13 +33,11 @@ const Home = () => {
   });
 
   return (
-    <div className="container">
-      <h1>Home</h1>
-      <h2>
+    <div className="main">
+      <h4>
         Wpisz poniżej adres URL linku platformy youtube.com który chcesz
-        przekształcić na plik audio z rozszeżeniem .mp3, a następnie kliknij
-        przycisk POBIERZ
-      </h2>
+        przekształcić na plik audio z rozszeżeniem .mp3
+      </h4>
       <div>
         <form onSubmit={formik.handleSubmit}>
           <TextField
@@ -53,8 +52,9 @@ const Home = () => {
             color="primary"
             variant="contained"
             type="submit"
+            sx={{ margin: "20px" }}
           >
-            Pobierz
+            Konwertuj
           </Button>
         </form>
       </div>
@@ -63,8 +63,19 @@ const Home = () => {
         Your browser does not support the audio element.
       </audio>
       {audio?.current ? (
-        <a href={audio?.current?.src} download="file.mp3">
-          DOWNLOAD
+        <a
+          href={audio?.current?.src}
+          download="file.mp3"
+          style={{ color: "white", marginTop: "5px" }}
+        >
+          <Button
+            size="large"
+            variant="contained"
+            type="submit"
+            sx={{ margin: "20px" }}
+          >
+            <FileDownloadIcon fontSize="large" />
+          </Button>
         </a>
       ) : null}
     </div>
