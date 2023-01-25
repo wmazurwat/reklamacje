@@ -3,37 +3,36 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import React, { useState, useEffect } from "react";
+import { Avatar } from "@mui/material";
 
 const Navbar = () => {
-  const [isAdmin, setIsAdmin] = useState();
-  async function fetchUser() {
-    const user = auth.currentUser;
-    if (user?.uid) {
-      const userRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(userRef);
-      const data = docSnap.data();
-      setIsAdmin(data?.admin);
-    }
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
   auth.onAuthStateChanged((user) => {
     if (user) {
-      fetchUser();
     } else {
+      if (location.pathname !== "/login") {
+        navigate("/login");
+      }
     }
   });
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <AppBar position="static">
       <Toolbar>
-        {isAdmin ? <Link to="/admin">Admin</Link> : null}
-
+        <Button>
+          <Avatar
+            alt="Remy Sharp"
+            src="/static/images/avatar/1.jpg"
+            sx={{}}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          ></Avatar>
+        </Button>
         <Button
           sx={{ flex: 1, justifyContent: "flex-end" }}
           onClick={() => {

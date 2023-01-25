@@ -6,14 +6,10 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { auth, db } from "../firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
-
-interface MyFormValues {
-  firstName: string;
-}
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   email: yup
@@ -28,6 +24,7 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "foobar@example.com",
@@ -44,23 +41,20 @@ const Login = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         // navigate("/")
-        const { email, displayName, photoURL, uid } = user;
+        const { email, displayName, photoURL, uid, phoneNumber } = user;
         try {
           const docRef = doc(db, "users", uid);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
           } else {
-            console.log("No such document!");
             await setDoc(doc(db, "users", uid), {
-              id: user.uid,
-              admin: false,
+              userID: user.uid,
               email,
               displayName,
               photoURL,
+              phoneNumber,
             });
-            console.log("Document written with ID: ");
           }
         } catch (e) {
           console.error("Error adding document: ", e);
@@ -81,8 +75,7 @@ const Login = () => {
         const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(user);
-        alert("Zalogowano");
+        navigate("/");
         // ...
       })
       .catch((error) => {
@@ -93,19 +86,14 @@ const Login = () => {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode);
-        console.log(errorMessage);
-        console.log(email);
-        console.log(credential);
       });
   };
 
   return (
     <div className="main">
-      <h1>Login</h1>
+      <h1>Logowanie</h1>
       <h3>
-        Aplikacja HUB służy do konwersji sygnału audio z serwera youtube.com do
-        pliku mp3.
+        Wewnętrzna aplikacja GeoTechnology do składania reklamacji smartfonów
       </h3>
       <p>
         Aby skorzystać z usługi zaloguj się najpierw korzystając z konta Google

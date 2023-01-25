@@ -1,7 +1,9 @@
 function Footer() {
   return (
     <footer>
-      <h5>© 2022 Wojciech Mazur. Wszelkie prawa zastrzeżone.</h5>
+      <h5>
+        © 2023 Geotechnology IT Group Sp. z o.o. Wszelkie prawa zastrzeżone.
+      </h5>
     </footer>
   );
 }

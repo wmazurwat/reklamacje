@@ -22,7 +22,6 @@ const Admin = () => {
     const querySnapshot = await getDocs(collection(db, "users"));
     const temp: any = [];
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
       temp.push(doc.data());
     });
     setUsers(temp);

@@ -2,8 +2,6 @@ import axios from "axios";
 
 const URL = "http://localhost:8000";
 export const getVideoInfo = async (url: string) => {
-  console.log(url);
-
   const info = await axios
     .post(URL + "/yt-info", {
       url,
@@ -13,7 +11,6 @@ export const getVideoInfo = async (url: string) => {
 };
 
 export const getMp3 = async (url: string) => {
-  console.log(url);
   const x = await fetch(URL + "/yt-new", {
     method: "POST",
     body: JSON.stringify({ url }),
@@ -47,14 +44,4 @@ export const getMp3 = async (url: string) => {
     .then((response) => response.blob())
     .catch((err) => console.error(err));
   return x;
-
-  // const mp3 = await axios
-  //   .post(URL + "/yt-new", {
-  //     url,
-  //   })
-  //   .then((resp) => {
-  //     console.log(resp.headers);
-  //     return resp.data;
-  //   });
-  // return mp3;
 };

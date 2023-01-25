@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
+import New from "./pages/New";
+import Review from "./pages/Review";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,7 +18,10 @@ function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="/" element={<Home />} />
-        <Route path="admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/new" element={<New />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </div>
