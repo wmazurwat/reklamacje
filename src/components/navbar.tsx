@@ -10,10 +10,23 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
 
 const Navbar = () => {
+  const [user, setUser] = useState<any>();
+
   const navigate = useNavigate();
   const location = useLocation();
+  async function fetchUser() {
+    const user = auth.currentUser;
+
+    if (user?.uid) {
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+      const data = docSnap.data();
+      setUser(data);
+    }
+  }
   auth.onAuthStateChanged((user) => {
     if (user) {
+      fetchUser();
     } else {
       if (location.pathname !== "/login") {
         navigate("/login");
@@ -26,21 +39,23 @@ const Navbar = () => {
         <Button>
           <Avatar
             alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
+            src={user?.photoURL || "/static/images/avatar/1.jpg"}
             sx={{}}
             onClick={() => {
               navigate("/profile");
             }}
           ></Avatar>
         </Button>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Aplikacja do reklamcji smartfonów
+        </Typography>
         <Button
-          sx={{ flex: 1, justifyContent: "flex-end" }}
           onClick={() => {
             signOut(auth);
           }}
           color="inherit"
         >
-          Logout
+          Wyloguj się
         </Button>
       </Toolbar>
     </AppBar>

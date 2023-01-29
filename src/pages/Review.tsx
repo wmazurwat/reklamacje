@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -22,89 +23,51 @@ import {
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
-// --------------------------------------------- on Submit
-// try {
-//   const docRef = doc(db, "complaints", uid);
-//   const docSnap = await getDoc(docRef);
-
-//   if (docSnap.exists()) {
-//   } else {
-//     await setDoc(doc(db, "complaints", uid), {
-//       userID: user.uid,
-//       email,
-//       displayName,
-//       photoURL,
-//       phoneNumber,
-//     });
-//   }
-// } catch (e) {
-//   console.error("Error adding document: ", e);
-// }
-
 const Review = () => {
-  const [complaints, setComplaints] = useState<any[]>([]);
-  const [inProgress, setInProgress] = useState(false);
-  const { state } = useLocation();
-  const [user, setUser] = useState<any>();
-  const [isAdmin, setIsAdmin] = useState();
-  async function fetchUser() {
-    const user = auth.currentUser;
-
-    if (user?.uid) {
-      const userRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(userRef);
-      const data = docSnap.data();
-      setUser(data);
-      setIsAdmin(data?.isAdmin);
-    }
-  }
+  const { state } = useLocation() as any;
   console.log(state);
-  const getUsers = async () => {
-    const querySnapshot = await getDocs(collection(db, "complaints"));
-    const temp: any = [];
-    querySnapshot.forEach((doc) => {
-      temp.push(doc.data());
+  const [formData, setFormData] = useState({
+    newComment: "",
+  });
+  const handleChange = (event: any) => {
+    setFormData({
+      newComment: event.target.value,
     });
-    setComplaints(temp);
   };
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const updateComplaint = async (event: any, status: string) => {
+    event.preventDefault();
+    try {
+      const docRef = doc(db, "complaints", state.id);
+      setDoc(
+        docRef,
+        {
+          comments: state.comments
+            ? [...state.comments, formData.newComment]
+            : [formData.newComment],
+          status,
+        },
+        { merge: true }
+      );
+      console.log("s");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
   return (
     <div className="review">
-      <h1>Reklamacja o numerze ID: </h1>
+      <h1>Reklamacja o numerze ID: {state.id}</h1>
+      <h2>model: {state.model}</h2>
+
+      {/* <div>
+        {Object.entries(state).map(([k, v], i) => (
+          <p key={k}>{k}</p>
+        ))}
+      </div> */}
       <div>
-        <TableContainer
-          component={Paper}
-          sx={{ minWidth: 450, width: "80%", m: "auto" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">ID zgłoszenia</TableCell>
-                <TableCell align="center">Data</TableCell>
-                <TableCell align="center">ID urządzenia</TableCell>
-                <TableCell align="center">Opis zgłoszenia</TableCell>
-                <TableCell align="center">status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {complaints.map((c) => (
-                <TableRow key={c.complaintID}>
-                  <TableCell align="center">{c.complaintID}</TableCell>
-                  <TableCell align="center">{c.date.toString()}</TableCell>
-                  <TableCell align="center">{c.deviceID}</TableCell>
-                  <TableCell align="center">{c.description}</TableCell>
-                  <TableCell align="center">{c.status}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-      <div>
-        {" "}
-        {isAdmin ? (
+        {state.comments?.map((x: any, i: number) => (
+          <p key={i}>{x as string}</p>
+        ))}
+        {state.isAdmin ? (
           <FormControl fullWidth margin="dense">
             <TextField
               fullWidth
@@ -112,22 +75,21 @@ const Review = () => {
               id="comment"
               name="comment"
               label="Komentarz do reklamacji"
-              //autoWidth="true"
-              //onChange={handleChange}
+              onChange={handleChange}
             />
           </FormControl>
         ) : (
           false
         )}
       </div>
-      {isAdmin ? (
+      {state.isAdmin ? (
         <div>
           <Button
             size="large"
             color="primary"
             variant="contained"
             type="submit"
-            //onClick={handleSubmit}
+            onClick={(e) => updateComplaint(e, "Accepted")}
             sx={{ margin: "20px" }}
           >
             Zaakceptuj
@@ -137,7 +99,7 @@ const Review = () => {
             color="primary"
             variant="contained"
             type="submit"
-            //onClick={handleSubmit}
+            onClick={(e) => updateComplaint(e, "Declined")}
             sx={{ margin: "20px" }}
           >
             Odrzuć

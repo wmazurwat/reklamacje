@@ -7,6 +7,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import {
   Paper,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -16,14 +17,18 @@ import {
 } from "@mui/material";
 import { Margin } from "@mui/icons-material";
 
+const ARCHIVE_STATUS = ["Canceled", "Declined", "Accepted", "Resolved", "Set"];
+const ACTIVE_STATUS = ["Pending"];
+
 function Home() {
   const navigate = useNavigate();
 
   const [isAdmin, setIsAdmin] = useState();
   const [user, setUser] = useState<any>();
+  const [isArchive, setIsArchive] = useState<boolean>(false);
 
   const [complaints, setComplaints] = useState<any[]>([]);
-  const getComplaints = async () => {
+  const fetchComplaints = async () => {
     const querySnapshot = await getDocs(collection(db, "complaints"));
     const temp: any = [];
     querySnapshot.forEach((doc) => {
@@ -33,7 +38,9 @@ function Home() {
   };
 
   const navigateToSelected = (id: string) => {
-    navigate("/review", { state: complaints.find((x) => x.id === id) });
+    navigate("/review", {
+      state: { ...complaints.find((x) => x.id === id), ...user },
+    });
   };
   async function fetchUser() {
     const user = auth.currentUser;
@@ -54,12 +61,12 @@ function Home() {
   });
   useEffect(() => {
     fetchUser();
-    getComplaints();
+    fetchComplaints();
   }, []);
-  console.log("render");
   return (
     <div className="container">
       <h1>Lista reklamacji </h1>
+      <Switch checked={isArchive} onChange={() => setIsArchive(!isArchive)} />
       {!isAdmin ? (
         <Button
           variant="contained"
@@ -94,14 +101,13 @@ function Home() {
             <TableBody>
               {complaints
                 .filter((x) => (isAdmin ? true : x.userID === user?.userID))
-                // filter by status
-                // .filter((x) => (isAdmin ? true : x.userID === user?.userID))
-
+                .filter((x) =>
+                  isArchive
+                    ? ARCHIVE_STATUS.includes(x.status)
+                    : ACTIVE_STATUS.includes(x.status)
+                )
                 .map((c) => (
-                  <TableRow
-                    key={c.complaintID}
-                    onClick={() => navigateToSelected(c.id)}
-                  >
+                  <TableRow key={c.id} onClick={() => navigateToSelected(c.id)}>
                     <TableCell align="center">{c.id}</TableCell>
                     <TableCell align="center">
                       {new Date(c.date.seconds * 1000).toDateString()}

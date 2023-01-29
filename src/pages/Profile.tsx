@@ -23,19 +23,16 @@ import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const [supportedDevices, setSupportedDevices] = useState([]);
   const [user, setUser] = useState<any>();
-  const navigate = useNavigate();
 
-  const [claim, setClaim] = useState({
-    brand: "",
-    model: "",
-    description: "",
+  const [formData, setFormData] = useState({
+    phoneNumber: "",
+    shippingStreet: "",
+    shippingCity: "",
+    shippingPostalCode: "",
   });
   async function fetchUser() {
-    console.log("fetching... ");
     const user = auth.currentUser;
-
     if (user?.uid) {
       const userRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(userRef);
@@ -43,53 +40,30 @@ function Profile() {
       setUser(data);
     }
   }
-  const fetchDevices = async () => {
-    const querySnapshot = await getDocs(collection(db, "supportedDevices"));
-    const temp: any = [];
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      temp.push(doc.data());
-    });
-    setSupportedDevices(temp);
-  };
+
   const handleChange = (event: any) => {
-    setClaim({
-      ...claim,
+    setFormData({
+      ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
   useEffect(() => {
     fetchUser();
-    fetchDevices();
   }, []);
 
   const handleSubmit = async (event: any) => {
-    console.log("hs");
-
     event.preventDefault();
     try {
-      await addDoc(collection(db, "complaints"), {
-        name: user.displayName,
-        email: user.email,
-        brand: claim.brand,
-        phone: user.phoneNumber,
-        model: claim.model,
-        description: claim.description,
-        userID: user.userID,
-        //serialNumber: claim.serialNumber,
-        date: serverTimestamp(),
-        status: "Pending",
+      const docRef = doc(db, "users", user.userID);
+      await setDoc(docRef, {
+        ...user,
+        ...formData,
       });
-      navigate("/");
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
-  const selectedBrand: any = supportedDevices.find(
-    (x: any) => x.brand === claim.brand
-  );
-  const models: any[] = selectedBrand ? selectedBrand.models : [];
 
   return (
     <div className="main">
@@ -102,41 +76,39 @@ function Profile() {
         <TextField
           fullWidth
           margin="normal"
-          id="serialNumber"
-          name="serialNumber"
+          id="phoneNumber"
+          name="phoneNumber"
           label="Numer telefonu"
-          //defaultValue={user.displayName}
-          //autoWidth="true"
+          defaultValue={user?.phoneNumber || ""}
           onChange={handleChange}
         />
         <h3> Dane wysyłkowe</h3>
         <TextField
           fullWidth
           margin="normal"
-          id="serialNumber"
-          name="serialNumber"
+          id="shippingStreet"
+          name="shippingStreet"
           label="Ulica"
-          //defaultValue={user.displayName}
-          //autoWidth="true"
+          defaultValue={user?.shippingStreet || ""}
           onChange={handleChange}
         />
         <TextField
           fullWidth
           margin="normal"
-          id="description"
-          name="description"
+          id="shippingCity"
+          name="shippingCity"
           label="Miejscowość"
-          //defaultValue={user.displayName}
-          //autoWidth="true"
+          defaultValue={user?.shippingCity || ""}
           onChange={handleChange}
         />
         <TextField
-          name="zipCode"
-          label="Kod pocztowy"
           fullWidth
-          onChange={handleChange}
-          id="description"
           margin="normal"
+          id="shippingPostalCode"
+          name="shippingPostalCode"
+          label="Kod pocztowy"
+          defaultValue={user?.shippingPostalCode || ""}
+          onChange={handleChange}
         />
         <Button
           size="large"
