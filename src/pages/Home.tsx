@@ -107,7 +107,11 @@ function Home() {
                     : ACTIVE_STATUS.includes(x.status)
                 )
                 .map((c) => (
-                  <TableRow key={c.id} onClick={() => navigateToSelected(c.id)}>
+                  <TableRow
+                    hover
+                    key={c.id}
+                    onClick={() => navigateToSelected(c.id)}
+                  >
                     <TableCell align="center">{c.id}</TableCell>
                     <TableCell align="center">
                       {new Date(c.date.seconds * 1000).toDateString()}

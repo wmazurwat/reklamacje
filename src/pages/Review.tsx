@@ -56,7 +56,10 @@ const Review = () => {
   return (
     <div className="review">
       <h1>Reklamacja o numerze ID: {state.id}</h1>
-      <h2>model: {state.model}</h2>
+      <h2>Data: {new Date(state.date.seconds * 1000).toDateString()}</h2>
+      <h2>Marka: {state.brand}</h2>
+      <h2>Model: {state.model}</h2>
+      <h2>Opis problemu: {state.description}</h2>
 
       {/* <div>
         {Object.entries(state).map(([k, v], i) => (
@@ -65,7 +68,7 @@ const Review = () => {
       </div> */}
       <div>
         {state.comments?.map((x: any, i: number) => (
-          <p key={i}>{x as string}</p>
+          <p key={i}>Komentarz: {x as string}</p>
         ))}
         {state.isAdmin ? (
           <FormControl fullWidth margin="dense">
@@ -112,7 +115,7 @@ const Review = () => {
             color="primary"
             variant="contained"
             type="submit"
-            //onClick={handleSubmit}
+            onClick={(e) => updateComplaint(e, "Canceled")}
             sx={{ margin: "20px" }}
           >
             Usuń reklamację

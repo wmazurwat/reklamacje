@@ -69,6 +69,8 @@ function Profile() {
     <div className="main">
       <h2> Informacje o użytkowniku</h2>
       <h3> Dane osobowe</h3>
+      <h4>{user?.displayName}</h4>
+      <h4>{user?.email}</h4>
 
       <FormControl fullWidth>
         <h3> Dane kontaktowe</h3>
