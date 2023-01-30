@@ -44,10 +44,12 @@ const Login = () => {
         const { email, displayName, photoURL, uid, phoneNumber } = user;
         try {
           const docRef = doc(db, "users", uid);
+          console.log("login: fetchusers");
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
           } else {
+            console.log("loginnowy: fetchusers");
             await setDoc(doc(db, "users", uid), {
               userID: user.uid,
               email,

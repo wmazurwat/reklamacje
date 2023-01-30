@@ -30,6 +30,7 @@ function Home() {
   const [complaints, setComplaints] = useState<any[]>([]);
   const fetchComplaints = async () => {
     const querySnapshot = await getDocs(collection(db, "complaints"));
+    console.log("homepage: fetchComplaints");
     const temp: any = [];
     querySnapshot.forEach((doc) => {
       temp.push({ ...doc.data(), id: doc.id });
@@ -47,6 +48,7 @@ function Home() {
 
     if (user?.uid) {
       const userRef = doc(db, "users", user.uid);
+      console.log("homepage: fetchuser");
       const docSnap = await getDoc(userRef);
       const data = docSnap.data();
       setUser(data);

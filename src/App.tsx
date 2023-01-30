@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import "./App.css";
-import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Footer from "./components/footer";
@@ -18,7 +17,6 @@ function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
         <Route path="/new" element={<New />} />
         <Route path="/review" element={<Review />} />
         <Route path="/profile" element={<Profile />} />

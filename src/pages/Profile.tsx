@@ -35,6 +35,7 @@ function Profile() {
     const user = auth.currentUser;
     if (user?.uid) {
       const userRef = doc(db, "users", user.uid);
+      console.log("profile: fetchusers");
       const docSnap = await getDoc(userRef);
       const data = docSnap.data();
       setUser(data);

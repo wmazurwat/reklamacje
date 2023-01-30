@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
 
 const Navbar = () => {
-  const [user, setUser] = useState<any>();
+  const [userData, setUserData] = useState<any>();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,16 +19,18 @@ const Navbar = () => {
 
     if (user?.uid) {
       const userRef = doc(db, "users", user.uid);
+      console.log("navbar: fetchuser");
       const docSnap = await getDoc(userRef);
       const data = docSnap.data();
-      setUser(data);
+      setUserData(data);
     }
   }
   auth.onAuthStateChanged((user) => {
-    if (user) {
+    console.log("onAuthStateChanged: fetchuser");
+    if (user && !userData) {
       fetchUser();
     } else {
-      if (location.pathname !== "/login") {
+      if (location.pathname !== "/login" && !user) {
         navigate("/login");
       }
     }
@@ -39,7 +41,7 @@ const Navbar = () => {
         <Button>
           <Avatar
             alt="Remy Sharp"
-            src={user?.photoURL || "/static/images/avatar/1.jpg"}
+            src={userData?.photoURL || "/static/images/avatar/1.jpg"}
             sx={{}}
             onClick={() => {
               navigate("/profile");

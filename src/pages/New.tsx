@@ -31,9 +31,10 @@ function New() {
     brand: "",
     model: "",
     description: "",
+    serialNumber: "",
   });
   async function fetchUser() {
-    console.log("fetching... ");
+    console.log("newcomplanits fetching... ");
     const user = auth.currentUser;
 
     if (user?.uid) {
@@ -45,6 +46,7 @@ function New() {
   }
   const fetchDevices = async () => {
     const querySnapshot = await getDocs(collection(db, "supportedDevices"));
+    console.log("newcomplanits: fetchDevices");
     const temp: any = [];
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data()}`);
@@ -77,7 +79,7 @@ function New() {
         model: claim.model,
         description: claim.description,
         userID: user.userID,
-        //serialNumber: claim.serialNumber,
+        serialNumber: claim.serialNumber,
         date: serverTimestamp(),
         status: "Pending",
       });
