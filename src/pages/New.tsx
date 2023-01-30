@@ -146,33 +146,6 @@ function New() {
           //autoWidth="true"
           onChange={handleChange}
         />
-        {/* <h2>Dane osobowe</h2>
-        <TextField
-          id="name"
-          fullWidth
-          name="name"
-          label="Imię i Nazwisko"
-          margin="normal"
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          id="email"
-          name="email"
-          label="Email"
-          onChange={handleChange}
-        />
-
-        <TextField
-          fullWidth
-          margin="normal"
-          id="phone"
-          name="phone"
-          label="Numer kontaktowy"
-          onChange={handleChange}
-        /> */}
-
         <Button
           size="large"
           color="primary"
