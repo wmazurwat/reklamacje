@@ -96,7 +96,7 @@ function Home() {
                 <TableCell align="center">ID zgłoszenia</TableCell>
                 <TableCell align="center">Data</TableCell>
                 <TableCell align="center">Urzadzenie</TableCell>
-                <TableCell align="center">Opis</TableCell>
+
                 <TableCell align="center">Status</TableCell>
               </TableRow>
             </TableHead>
@@ -121,7 +121,7 @@ function Home() {
                     <TableCell align="center">
                       {c.brand + " " + c.model}
                     </TableCell>
-                    <TableCell align="center">{c.description}</TableCell>
+
                     <TableCell align="center">{c.status}</TableCell>
                   </TableRow>
                 ))}

@@ -67,7 +67,7 @@ function Profile() {
   };
 
   return (
-    <div className="main">
+    <div className="profile">
       <h2> Informacje o użytkowniku</h2>
       <h3> Dane osobowe</h3>
       <h4>{user?.displayName}</h4>

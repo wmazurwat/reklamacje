@@ -14,6 +14,7 @@ body {
 }
 .review {
   height: inherit;
+  height: calc(100vh - 180px);
   padding: 30px;
   max-width: 800px;
   margin-left: auto;
@@ -21,6 +22,15 @@ body {
 }
 .main {
   height: inherit;
+  height: calc(100vh - 180px);
+  padding: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile {
+  height: inherit;
+  height: calc(100vh - 180px);
   padding: 30px;
   max-width: 800px;
   margin-left: auto;
