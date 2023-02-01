@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import {
+  FormControlLabel,
   Paper,
   Switch,
   Table,
@@ -17,8 +18,8 @@ import {
 } from "@mui/material";
 import { Margin } from "@mui/icons-material";
 
-const ARCHIVE_STATUS = ["Canceled", "Declined", "Accepted", "Resolved", "Set"];
-const ACTIVE_STATUS = ["Pending"];
+const ARCHIVE_STATUS = ["Anulowana", "Odrzucona", "Zaakceptowana"];
+const ACTIVE_STATUS = ["Oczekująca"];
 
 function Home() {
   const navigate = useNavigate();
@@ -68,7 +69,16 @@ function Home() {
   return (
     <div className="container">
       <h1>Lista reklamacji </h1>
-      <Switch checked={isArchive} onChange={() => setIsArchive(!isArchive)} />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isArchive}
+            onChange={() => setIsArchive(!isArchive)}
+            name="archiwum"
+          />
+        }
+        label="Archiwum"
+      />
       {!isAdmin ? (
         <Button
           variant="contained"
@@ -86,6 +96,7 @@ function Home() {
         </Button>
       ) : null}
       <div>
+        <h2>Wybierz reklamację, aby przejrzeć szczegóły lub podjąć akcję</h2>
         <TableContainer
           component={Paper}
           sx={{ minWidth: 450, width: "80%", m: "auto" }}
@@ -94,10 +105,11 @@ function Home() {
             <TableHead>
               <TableRow>
                 <TableCell align="center">ID zgłoszenia</TableCell>
-                <TableCell align="center">Data</TableCell>
+                <TableCell align="center">Data zgłoszenia</TableCell>
                 <TableCell align="center">Urzadzenie</TableCell>
 
                 <TableCell align="center">Status</TableCell>
+                <TableCell align="center">Zgłaszający</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -114,7 +126,7 @@ function Home() {
                     key={c.id}
                     onClick={() => navigateToSelected(c.id)}
                   >
-                    <TableCell align="center">{c.id}</TableCell>
+                    <TableCell align="center">{}</TableCell>
                     <TableCell align="center">
                       {new Date(c.date.seconds * 1000).toDateString()}
                     </TableCell>
@@ -123,6 +135,7 @@ function Home() {
                     </TableCell>
 
                     <TableCell align="center">{c.status}</TableCell>
+                    <TableCell align="center">{c.name}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

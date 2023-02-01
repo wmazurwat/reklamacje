@@ -56,7 +56,7 @@ const Navbar = () => {
           component="div"
           sx={{ flexGrow: 1 }}
         >
-          Aplikacja do reklamcji smartfonów
+          Obsługa reklamacji
         </Typography>
         <Button
           onClick={() => {

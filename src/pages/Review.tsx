@@ -92,7 +92,7 @@ const Review = () => {
             color="primary"
             variant="contained"
             type="submit"
-            onClick={(e) => updateComplaint(e, "Accepted")}
+            onClick={(e) => updateComplaint(e, "Zaakceptowana")}
             sx={{ margin: "20px" }}
           >
             Zaakceptuj
@@ -102,7 +102,7 @@ const Review = () => {
             color="primary"
             variant="contained"
             type="submit"
-            onClick={(e) => updateComplaint(e, "Declined")}
+            onClick={(e) => updateComplaint(e, "Odrzucona")}
             sx={{ margin: "20px" }}
           >
             Odrzuć
@@ -115,10 +115,10 @@ const Review = () => {
             color="primary"
             variant="contained"
             type="submit"
-            onClick={(e) => updateComplaint(e, "Canceled")}
+            onClick={(e) => updateComplaint(e, "Anulowana")}
             sx={{ margin: "20px" }}
           >
-            Usuń reklamację
+            Anuluj reklamację
           </Button>
         </div>
       )}

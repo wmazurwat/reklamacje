@@ -81,7 +81,7 @@ function New() {
         userID: user.userID,
         serialNumber: claim.serialNumber,
         date: serverTimestamp(),
-        status: "Pending",
+        status: "Oczekująca",
       });
       navigate("/");
     } catch (e) {

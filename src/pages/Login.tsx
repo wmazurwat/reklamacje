@@ -95,7 +95,8 @@ const Login = () => {
     <div className="main">
       <h1>Logowanie</h1>
       <h3>
-        Wewnętrzna aplikacja GeoTechnology do składania reklamacji smartfonów
+        Lista reklamacji jest dostępna dla zalogowanych użytkowników. Aplikacja
+        wymaga zalogowania z wykorzystaniem konta google
       </h3>
       <p>
         Aby skorzystać z usługi zaloguj się najpierw korzystając z konta Google
