@@ -92,7 +92,7 @@ function Home() {
             navigate("/new");
           }}
         >
-          Add
+          Dodaj nową reklamację
         </Button>
       ) : null}
       <div>
