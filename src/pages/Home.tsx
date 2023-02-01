@@ -104,7 +104,7 @@ function Home() {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">ID zgłoszenia</TableCell>
+                <TableCell align="center">Numer</TableCell>
                 <TableCell align="center">Data zgłoszenia</TableCell>
                 <TableCell align="center">Urzadzenie</TableCell>
 
@@ -120,13 +120,13 @@ function Home() {
                     ? ARCHIVE_STATUS.includes(x.status)
                     : ACTIVE_STATUS.includes(x.status)
                 )
-                .map((c) => (
+                .map((c, index) => (
                   <TableRow
                     hover
                     key={c.id}
                     onClick={() => navigateToSelected(c.id)}
                   >
-                    <TableCell align="center">{}</TableCell>
+                    <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="center">
                       {new Date(c.date.seconds * 1000).toDateString()}
                     </TableCell>
